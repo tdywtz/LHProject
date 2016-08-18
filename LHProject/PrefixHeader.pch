@@ -1,0 +1,46 @@
+//
+//  PrefixHeader.pch
+//  lhproject
+//
+//  Created by bangong on 16/3/24.
+//  Copyright © 2016年 auto. All rights reserved.
+//
+
+#ifdef __OBJC__
+
+#import "LHController.h"
+
+#import "HttpRequestManger.h"
+#import "UIViewController+LHVC.h"
+#import "LHKit.h"
+#import "XMPPManager.h"
+
+#import <POP.h>
+#import <XMPPFramework.h>
+#import <UIImageView+WebCache.h>
+#import <MJRefresh.h>
+
+//define this constant if you want to use Masonry without the 'mas_' prefix
+#define MAS_SHORTHAND
+//define this constant if you want to enable auto-boxing for default syntax
+#define MAS_SHORTHAND_GLOBALS
+#import <Masonry.h>
+
+#define HEIGHT [UIScreen mainScreen].bounds.size.height
+#define WIDTH  [UIScreen mainScreen].bounds.size.width
+
+
+#define RGB_color(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+
+#define colorBlack RGB_color(51,51,51,1)//标题浅黑
+#define colorDeepGray RGB_color(102,102,102,1)//深灰
+#define colorLightGray RGB_color(153,153,153,1)//浅灰
+#define colorLightBlue RGB_color(6,143,206,1)//浅蓝
+#define colorDeepBlue RGB_color(0,125,184,1)//深蓝
+#define colorLineGray RGB_color(217,217,217,1)//线条灰
+#define colorYellow RGB_color(254,153,22,1)//文字黄
+#define colorOrangeRed RGB_color(254,77,22,1)//橙红色
+#define colorNavigationBarColor RGB_color(1, 184, 198, 1)//导航颜色
+#define colorViewBackColor  RGB_color(247, 247, 247, 1)
+
+#endif /* PrefixHeader_pch */
