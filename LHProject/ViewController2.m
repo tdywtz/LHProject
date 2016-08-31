@@ -13,9 +13,8 @@
 #import "LHCustomItemViewController.h"
 #import "LHMenuController.h"
 #import "ZoonTableViewCell.h"
-#import <TTTAttributedLabel.h>
 
-@interface ViewController2 ()<UIViewControllerTransitioningDelegate,UITableViewDataSource,UITableViewDelegate,TTTAttributedLabelDelegate>
+@interface ViewController2 ()<UIViewControllerTransitioningDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     UILabel *_label;
 
@@ -47,34 +46,9 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     [self createTableView];
-    
-    TTTAttributedLabel *label = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    label.textColor = [UIColor redColor];
-    label.numberOfLines = 2;
-    label.lineSpacing = 20;
-    label.firstLineIndent = 50;
-   // label.lineBreakMode = NSLineBreakByCharWrapping;
-    [self.view addSubview:label];
-    [label makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(CGPointZero);
-        make.width.equalTo(200);
-    }];
-    label.text = @"阿里加阿里加十分阿里加十分阿里加十分\n阿里加十分阿里加十分阿里加十分阿里加十分十分\n456464645645\nfsdadsfsdaigdjfkgdfgdfgdsf";
-  CGSize size =  [TTTAttributedLabel sizeThatFitsAttributedString:label.attributedText withConstraints:CGSizeMake(200, 10000) limitedToNumberOfLines:1000];
-    NSLog(@"%f",size.height);
-    label.delegate = self;
-    //[label addLinkToTransitInformation:@{@"1":@"dsafs"} withRange:NSMakeRange(0, 3)];
+
 }
 
-- (void)attributedLabel:(TTTAttributedLabel *)label
-  didSelectLinkWithDate:(NSDate *)date{
-    NSLog(@"%@",date);
-}
-
-- (void)attributedLabel:(TTTAttributedLabel *)label
-didSelectLinkWithTransitInformation:(NSDictionary *)components{
-    NSLog(@"%@",components);
-}
 
 
 

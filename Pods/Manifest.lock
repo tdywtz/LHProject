@@ -14,21 +14,6 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - BlocksKit (2.2.5):
-    - BlocksKit/All (= 2.2.5)
-  - BlocksKit/All (2.2.5):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
-    - BlocksKit/MessageUI
-    - BlocksKit/UIKit
-  - BlocksKit/Core (2.2.5)
-  - BlocksKit/DynamicDelegate (2.2.5)
-  - BlocksKit/MessageUI (2.2.5):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
-  - BlocksKit/UIKit (2.2.5):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
   - CocoaAsyncSocket (7.4.3):
     - CocoaAsyncSocket/All (= 7.4.3)
   - CocoaAsyncSocket/All (7.4.3):
@@ -41,18 +26,13 @@ PODS:
   - CocoaLumberjack/Core (1.9.2)
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
-  - CTAssetsPickerController (3.3.2-alpha):
-    - PureLayout (~> 3.0.0)
-  - GPUImage (0.1.7)
   - Masonry (1.0.1)
   - MBProgressHUD (0.9.2)
   - MJRefresh (3.1.0)
   - pop (1.0.9)
-  - PureLayout (3.0.1)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
-  - TTTAttributedLabel (1.13.4)
   - XMPPFramework (3.6.6):
     - XMPPFramework/Authentication (= 3.6.6)
     - XMPPFramework/BandwidthMonitor (= 3.6.6)
@@ -197,34 +177,25 @@ PODS:
     - XMPPFramework/Core
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.0.4)
-  - BlocksKit (~> 2.2.5)
-  - CTAssetsPickerController (~> 3.3.2-alpha)
-  - GPUImage (~> 0.1.7)
+  - AFNetworking
   - Masonry
-  - MBProgressHUD (~> 0.9.2)
-  - MJRefresh (~> 3.1.0)
-  - pop (~> 1.0.9)
-  - SDWebImage (~> 3.7.5)
-  - TTTAttributedLabel (~> 1.13.4)
+  - MBProgressHUD
+  - MJRefresh
+  - pop
+  - SDWebImage
   - XMPPFramework
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
   CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
-  CTAssetsPickerController: ef06977de8e0b6d6ff11a324d357a12335a61243
-  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   XMPPFramework: b06c210b0b71c08aa41a646bffd2021fa43bb43b
 
-PODFILE CHECKSUM: 1d7750a02d784b4e3ddc6efee708920af12e775d
+PODFILE CHECKSUM: 769dae595b132fb5564f5e6ec3322a37ff246b1c
 
 COCOAPODS: 1.0.1

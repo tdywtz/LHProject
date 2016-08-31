@@ -80,12 +80,6 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "$PODS_CONFIGURATION_BUILD_DIR/CTAssetsPickerController/CTAssetsPickerController.bundle"
-  install_resource "GPUImage/framework/Resources/lookup.png"
-  install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
-  install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "XMPPFramework/Extensions/Roster/CoreDataStorage/XMPPRoster.xcdatamodel"
   install_resource "XMPPFramework/Extensions/XEP-0045/CoreDataStorage/XMPPRoom.xcdatamodeld"
@@ -99,12 +93,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "XMPPFramework/Extensions/XEP-0136/CoreDataStorage/XMPPMessageArchiving.xcdatamodeld/XMPPMessageArchiving.xcdatamodel"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "$PODS_CONFIGURATION_BUILD_DIR/CTAssetsPickerController/CTAssetsPickerController.bundle"
-  install_resource "GPUImage/framework/Resources/lookup.png"
-  install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
-  install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "XMPPFramework/Extensions/Roster/CoreDataStorage/XMPPRoster.xcdatamodel"
   install_resource "XMPPFramework/Extensions/XEP-0045/CoreDataStorage/XMPPRoom.xcdatamodeld"
