@@ -16,7 +16,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
         nameTextField = UITextField.init(frame: CGRectMake(20, 100, 200, 30))
         nameTextField.borderStyle = .RoundedRect
         nameTextField.placeholder = "mingzi"
@@ -45,9 +44,10 @@ class LoginViewController: UIViewController {
         XMPPManager.shareManager().connectWithJID(nameTextField.text, password: passwordTextField.text)
         UIApplication.sharedApplication().delegate?.window!!.rootViewController = CustomTabBarController.init();
     }
+    
     func registerClick(){
 
-   
+
        self.presentViewController(RegisterViewController.init(), animated: true, completion: nil)
 
     }

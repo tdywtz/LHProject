@@ -15,7 +15,11 @@
 #import "LHMessage.h"
 
 @protocol XMPPManagerDelegate <NSObject>
+//接收消息
 -(void)receiveMessage:(LHMessage *)message;
+//登录成功
+- (void)loginSuccess;
+//
 @end
 
 @interface XMPPManager : NSObject
@@ -43,7 +47,7 @@
 -(void)reject:(NSString*)name;
 
 #pragma mark - 注册账号
-- (BOOL)registerWithPassWord:(NSString *)password;
+- (BOOL)registerWithName:(NSString *)name passWord:(NSString *)password;
 
 #pragma mark 个人中心
 //接口   1、获得myVcard 2、设置自定义节点  3、更新myVcard

@@ -25,8 +25,8 @@
 #import "DDLog.h"
 #import "DDTTYLogger.h"
 
-//NSString *const kXMPPmyJID = @"kXMPPmyJID";
-//NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
+
+#import <XMPPMessage+XEP_0184.h>
 
 #if DEBUG
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -217,9 +217,9 @@ static XMPPManager *shareManager = nil;
 
 
 #pragma mark - 注册账号
-- (BOOL)registerWithPassWord:(NSString *)password{
+- (BOOL)registerWithName:(NSString *)name passWord:(NSString *)password{
     [self disconnect];
-    [self connectWithJID:password password:password];
+    [self connectWithJID:name password:@"admin"];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         //xmppStream.myJID = [XMPPJID jidWithUser:@"971" domain:xmppDOMAIN resource:ZIYUANMING];
@@ -370,7 +370,7 @@ static XMPPManager *shareManager = nil;
             [results addObject:imageMessage];
         }
     }
-    
+
     return results;
 }
 
@@ -384,7 +384,6 @@ static XMPPManager *shareManager = nil;
     NSData *data = [NSJSONSerialization dataWithJSONObject:dict
                                                    options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonstr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
     [self sendMessageWithJID:target message:jsonstr];
     
 }
@@ -784,6 +783,23 @@ static XMPPManager *shareManager = nil;
         
         NSString *body = [[message elementForName:@"body"] stringValue];
         NSString *displayName = [user displayName];
+        NSString *received = [[message elementForName:@"received"] stringValue];
+
+        NSData *data = [body dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSInteger type = [dict[@"type"] integerValue];
+        if (type == 1) {
+
+            NSLog(@"===%@",received);
+          
+            NSLog(@"+++%@",displayName);
+        }else if (type == 2){
+            NSData *imageData = [[NSData alloc] initWithBase64EncodedString:dict[@"content"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            UIImage *image = [[UIImage alloc] initWithData:imageData];
+            NSLog(@"%@",image);
+        }else if (type == 3){
+            
+        }
 
         if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
         {
@@ -792,13 +808,13 @@ static XMPPManager *shareManager = nil;
             NSString *userid = [displayName substringToIndex:range.location];
             UIAlertController *alet = [UIAlertController alertControllerWithTitle:@"同意" message:@"同意" preferredStyle:UIAlertControllerStyleAlert];
           
-            UIAlertAction *act = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-          [xmppRoster acceptPresenceSubscriptionRequestFrom:[message from] andAddToRoster:YES];
-               // [[XMPPManager shareManager] agreeRequest:userid];
-                NSLog(@"%@",userid);
-            }];
-            [alet addAction:act];
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alet animated:YES completion:nil];
+//            UIAlertAction *act = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//          [xmppRoster acceptPresenceSubscriptionRequestFrom:[message from] andAddToRoster:YES];
+//               // [[XMPPManager shareManager] agreeRequest:userid];
+//                NSLog(@"%@",userid);
+//            }];
+//            [alet addAction:act];
+//            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alet animated:YES completion:nil];
 
         }
         else

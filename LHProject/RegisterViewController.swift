@@ -11,15 +11,20 @@ import UIKit
 
 class RegisterViewController: UIViewController {
 
+     var nameTextField : UITextField!
      var passwordTextField : UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        nameTextField = UITextField.init(frame: CGRectMake(20, 100, 200, 30))
+        nameTextField.borderStyle = .RoundedRect
+        nameTextField.placeholder = "mingzi"
         passwordTextField = UITextField.init(frame: CGRectMake(20, 150, 200, 30))
         passwordTextField.borderStyle = .RoundedRect
         passwordTextField.placeholder = "mima"
-
+        self.view.addSubview(nameTextField)
         self.view.addSubview(passwordTextField)
+
 
         let registerButton = UIButton.init(frame: CGRectMake(20, 250, 80, 30))
         registerButton.setTitle("register", forState: .Normal)
@@ -33,7 +38,7 @@ class RegisterViewController: UIViewController {
     func registerClick(){
 
 
-        XMPPManager.shareManager().registerWithPassWord(passwordTextField.text)
+        XMPPManager.shareManager().registerWithName(nameTextField.text, passWord: passwordTextField.text)
         
     }
 
