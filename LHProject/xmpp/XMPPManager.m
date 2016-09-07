@@ -291,16 +291,16 @@ static XMPPManager *shareManager = nil;
 //读取消息列表
 -(NSArray*)messageRecord:(NSString *)targetId{
     // return [self getRecords:targetId];
-    NSManagedObjectContext *context = [xmppMessageArchivingCoreDataStorage  mainThreadManagedObjectContext ];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject" inManagedObjectContext:context];
+    NSManagedObjectContext *context = xmppMessageArchivingCoreDataStorage.mainThreadManagedObjectContext;
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:xmppMessageArchivingCoreDataStorage.messageEntityName inManagedObjectContext:context];
     
-    
+
     NSFetchRequest *request = [[NSFetchRequest alloc]init];
     
     NSString *myjid = [NSString stringWithFormat:@"%@@%@",[xmppStream myJID].user,xmppDOMAIN];
     NSString *tojid = [NSString stringWithFormat:@"%@@%@",targetId,xmppDOMAIN];
     //谓词搜索当前联系人的信息
-    NSPredicate*predicate=[NSPredicate predicateWithFormat:@"(bareJidStr like %@) && (streamBareJidStr like %@)",tojid,myjid];
+    NSPredicate*predicate=[NSPredicate predicateWithFormat:@"(bareJidStr like %@) && (streamBareJidStr like %@)",tojid, xmppStream.myJID.bare];
     //NSFetchedResultsController
     [request setEntity:entityDescription];
 #pragma  mark 按照时间进行筛选
@@ -375,7 +375,7 @@ static XMPPManager *shareManager = nil;
 }
 
 //发送文字消息
--(void)sendTextMessageWithTarget:(NSString*)target
+-(LHTextMessage *)sendTextMessageWithTarget:(NSString*)target
                          message:(NSString *)message
                             type:(LHConversationType)type{
     
@@ -385,11 +385,21 @@ static XMPPManager *shareManager = nil;
                                                    options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonstr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     [self sendMessageWithJID:target message:jsonstr];
-    
+
+    LHUserInfo *info = [[LHUserInfo alloc] init];
+   // xmppStream.myJID
+
+    LHTextMessage *textMessage = [[LHTextMessage alloc] init];
+    textMessage.content = message;
+    textMessage.messageDirection = MessageDirection_SEND;
+    textMessage.userInfo = info;
+
+    return textMessage;
+
 }
 
 //发送图片消息
--(void)sendImageMessageWithTarget:(NSString *)target
+-(LHImageMessage *)sendImageMessageWithTarget:(NSString *)target
                             image:(UIImage *)image
                              type:(LHConversationType)type{
     
@@ -402,6 +412,12 @@ static XMPPManager *shareManager = nil;
     NSString *jsonstr = [[NSString alloc] initWithData:jsondata encoding:NSUTF8StringEncoding];
     
     [self sendMessageWithJID:target message:jsonstr];
+
+    LHImageMessage *imageMessage = [[LHImageMessage alloc] init];
+    imageMessage.image = image;
+    imageMessage.targetId = target;
+    imageMessage.
+    return imageMessage;
 }
 
 #pragma mark 发送消息
@@ -620,11 +636,15 @@ static XMPPManager *shareManager = nil;
     [xmppStream sendElement:presence];
 }
 
+//下线通知
 - (void)goOffline
 {
-    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
-    
-    [xmppStream sendElement:presence];
+//    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+//    
+//    [xmppStream sendElement:presence];
+
+    XMPPIQ *iq = [[XMPPIQ alloc] initWithXMLString:[NSString stringWithFormat:@"<presence from='%@'><priority>1</priority></presence>",xmppStream.myJID.bare]error:nil];
+    [xmppStream sendElement:iq];
 }
 
 
@@ -767,7 +787,7 @@ static XMPPManager *shareManager = nil;
     return NO;
 }
 
-//收到消息
+#pragma mark -//收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
     DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
@@ -800,6 +820,42 @@ static XMPPManager *shareManager = nil;
         }else if (type == 3){
             
         }
+
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        // 设置触发通知的时间
+//        NSDate *fireDate = [NSDate dateWithTimeIntervalSinceNow:alertTime];
+//        NSLog(@"fireDate=%@",fireDate);
+//
+//        notification.fireDate = fireDate;
+//        // 时区
+//        notification.timeZone = [NSTimeZone defaultTimeZone];
+//        // 设置重复的间隔
+//        notification.repeatInterval = kCFCalendarUnitSecond;
+
+        // 通知内容
+        notification.alertBody =  @"该起床了...";
+        notification.applicationIconBadgeNumber = 1;
+        // 通知被触发时播放的声音
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        // 通知参数
+        NSDictionary *userDict = [NSDictionary dictionaryWithObject:@"开始学习iOS开发了" forKey:@"key"];
+        notification.userInfo = userDict;
+
+        // ios8后，需要添加这个注册，才能得到授权
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            UIUserNotificationType type =  UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type
+                                                                                     categories:nil];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+            // 通知重复提示的单位，可以是天、周、月
+            notification.repeatInterval = NSCalendarUnitDay;
+        } else {
+            // 通知重复提示的单位，可以是天、周、月
+            notification.repeatInterval = NSDayCalendarUnit;  
+        }  
+        
+        // 执行通知注册  
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 
         if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
         {

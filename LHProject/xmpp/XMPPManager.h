@@ -13,8 +13,11 @@
 #import <XMPPvCardTemp.h>
 #import "xmppSetFile.h"
 #import "LHMessage.h"
+@class LHTextMessage;
+@class LHImageMessage;
 
 @protocol XMPPManagerDelegate <NSObject>
+@optional
 //接收消息
 -(void)receiveMessage:(LHMessage *)message;
 //登录成功
@@ -27,7 +30,7 @@
 @property (nonatomic,weak) id <XMPPManagerDelegate> delegate;
 
 + (XMPPManager *)shareManager;
-
+- (void)goOffline;
 //**链接服务器*/
 - (BOOL)connectWithJID:(NSString *)jid password:(NSString *)password;
 //**断开链接*/
@@ -60,12 +63,12 @@
 //信息列表
 - (NSArray *)messageRecordList:(NSString *)targetId;
 //发送文字消息
--(void)sendTextMessageWithTarget:(NSString*)target
+-(LHTextMessage *)sendTextMessageWithTarget:(NSString*)target
                          message:(NSString *)message
                             type:(LHConversationType)type;
 
 //发送图片消息
--(void)sendImageMessageWithTarget:(NSString *)target
+-(LHImageMessage *)sendImageMessageWithTarget:(NSString *)target
                             image:(UIImage *)image
                              type:(LHConversationType)type;
 @end

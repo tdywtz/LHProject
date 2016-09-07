@@ -108,9 +108,11 @@
         return;
     }
     inputBar.textView.text = @"";
-    [[XMPPManager shareManager] sendTextMessageWithTarget:self.targetId message:aText type:ConversationType_APPSERVICE];
-    
-    [self loadData];
+    LHTextMessage *textMessage = [[XMPPManager shareManager] sendTextMessageWithTarget:self.targetId message:aText type:ConversationType_APPSERVICE];
+    [_dataArray addObject:textMessage];
+
+    [_collectionView reloadData];
+    [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:_dataArray.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
 - (void)CZWIMInputBarFrameChangeValue:(CGRect)frame{
     CGRect edege = startFrame;
@@ -161,8 +163,6 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
         //获取消息
-        
-        
         LHMessage *message = _dataArray[indexPath.row];
   
         if ([message isKindOfClass:[LHTextMessage class]]) {
