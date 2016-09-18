@@ -53,6 +53,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[XMPPManager shareManager] goOffline];
 }
 
 // 本地通知回调函数，当应用程序在前台时调用

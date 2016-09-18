@@ -297,7 +297,7 @@ static XMPPManager *shareManager = nil;
 
     NSFetchRequest *request = [[NSFetchRequest alloc]init];
     
-    NSString *myjid = [NSString stringWithFormat:@"%@@%@",[xmppStream myJID].user,xmppDOMAIN];
+  //  NSString *myjid = [NSString stringWithFormat:@"%@@%@",[xmppStream myJID].user,xmppDOMAIN];
     NSString *tojid = [NSString stringWithFormat:@"%@@%@",targetId,xmppDOMAIN];
     //谓词搜索当前联系人的信息
     NSPredicate*predicate=[NSPredicate predicateWithFormat:@"(bareJidStr like %@) && (streamBareJidStr like %@)",tojid, xmppStream.myJID.bare];
@@ -416,7 +416,8 @@ static XMPPManager *shareManager = nil;
     LHImageMessage *imageMessage = [[LHImageMessage alloc] init];
     imageMessage.image = image;
     imageMessage.targetId = target;
-    imageMessage.
+   // imageMessage.sendId =
+
     return imageMessage;
 }
 

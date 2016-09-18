@@ -32,11 +32,9 @@ class RegisterViewController: UIViewController {
         registerButton.addTarget(self, action:"registerClick", forControlEvents: .TouchUpInside)
 
         self.view.addSubview(registerButton)
-
     }
 
     func registerClick(){
-
 
         XMPPManager.shareManager().registerWithName(nameTextField.text, passWord: passwordTextField.text)
         
@@ -46,8 +44,6 @@ class RegisterViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 
     /*
     // MARK: - Navigation
